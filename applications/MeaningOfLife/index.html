@@ -99,7 +99,7 @@
         var textureLoader = new THREE.TextureLoader();
         var touchPosition = -1;
         var scrollPosition = 0;
-        var particles = 100000;
+        var particles = 60000;
         var particleSystem, uniforms, geometry;
 
         var currentPage = 0;
@@ -212,11 +212,31 @@
                 }
             });
 
-            window.addEventListener('deviceorientation', function (event) {
-//                console.log(event.alpha, event.beta, event.gamma);
-                camera.rotation.x = event.beta / 180 * Math.PI;
-                camera.rotation.y = event.gamma / 180 * Math.PI;
-                camera.rotation.z = event.alpha / 180 * Math.PI;
+            var x = -1, y = -1;
+            var offsetX = 0, offsetY = 0;
+            var maxAngle = 15;
+            document.addEventListener('mousemove', function (event) {
+                if (x == -1 || y == -1) {
+                    x = event.x;
+                    y = event.y;
+                } else {
+                    offsetY += (event.x - x) / 30;
+                    offsetX += (event.y - y) / 30;
+                    if (offsetX > maxAngle) {
+                        offsetX = maxAngle;
+                    } else if(offsetX < -maxAngle) {
+                        offsetX = -maxAngle;
+                    }
+                    if (offsetY > maxAngle) {
+                        offsetY = maxAngle;
+                    } else if(offsetY < -maxAngle) {
+                        offsetY = -maxAngle;
+                    }
+                    camera.rotation.y = offsetY / 180 * Math.PI;
+                    camera.rotation.x = offsetX / 180 * Math.PI;
+                    x = event.x;
+                    y = event.y;
+                }
             });
 
             window.addEventListener('resize', function () {
@@ -327,5 +347,14 @@
             return mesh;
         }
     </script>
+
+    <audio id="bgm" src="./bgm.mp3" autoplay loop></audio>
+    <script>
+        document.getElementById("bgm").volume = 0.35;
+    </script>
+
+    <div id="hidden-item" style="display: none;">
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1260833376'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1260833376' type='text/javascript'%3E%3C/script%3E"));</script>
+    </div>
 </body>
 </html>
