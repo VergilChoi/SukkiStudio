@@ -1,0 +1,18 @@
+.social-link:hover,
+.social-link:focus,
+.nav-link:hover,
+.nav-link:focus,
+.nav-link.active,
+.active-point{
+    color: #F7E1E8;
+}
+
+.pace .pace-activity{
+    background: #F7E1E8;
+}
+
+.footer {
+    border: #F7E1E8 solid 3px;
+    border-left: none;
+    border-right: none;
+}

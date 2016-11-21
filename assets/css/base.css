@@ -1,0 +1,153 @@
+@font-face {
+    font-family: "Futura LT Book";
+    src: url("../fonts/FuturaLT-Book.woff");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Futura LT Medium";
+    src: url("../fonts/FuturaLT.woff");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Futura LT Bold";
+    src: url("../fonts/FuturaBT-Medium.woff");
+    font-weight: normal;
+}
+
+body {
+    font-family: "Futura LT Book", "SF UI Text", Arial, serif;
+    padding: 0;
+    margin: 0;
+    background: #FFFFFF;
+    color: #50596E;
+    display: flex;
+    flex-direction: column;
+}
+
+html, body {
+    height: 100%;
+}
+
+.container {
+    flex-grow: 9999;
+    margin-top: 60px;
+    margin-bottom: 80px;
+}
+
+a {
+    color: #50596E;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+}
+a:focus {
+    text-decoration: none;
+}
+a:visited {
+    color: #50596E;
+}
+ul {
+    padding: 0;
+    margin: 0;
+}
+li {
+    list-style-type: none;
+}
+
+header {
+    letter-spacing: 3px;
+}
+footer {
+    letter-spacing: 3px;
+}
+
+nav {
+    margin: 0 auto;
+    text-align: center;
+    width: 768px;
+}
+
+.social-link {
+    transition: 0.3s;
+}
+.social-link:hover, .social-link:focus {
+    text-decoration: none;
+}
+
+.left-links li {
+    padding-bottom: 10px;
+}
+.left-links {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}
+
+.right-links {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#home-link {
+    text-align: center;
+    margin: 0 auto;
+    padding-top: 80px;
+    padding-bottom: 50px;
+    font-family: "Futura LT Medium", serif;
+}
+#main-title {
+    font-size: 50px;
+    transition: 1s;
+}
+#main-title:hover, #main-title:hover{
+    text-decoration: none;
+    transform: scale(1.1);
+}
+
+.nav-link:hover, .nav-link:focus {
+    background-color: transparent !important;
+}
+.nav-link {
+    padding-bottom: 5px !important;
+    transition: 0.3s;
+}
+.nav-link-point {
+    display: none;
+}
+.active-point {
+    display: block;
+}
+
+
+.footer {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+.slogan {
+    font-size: 12px;
+    transform: scale(0.85);
+}
+
+#preloader {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: #ffffff;
+    z-index: 1999;
+}
+
+@media (max-width: 768px) {
+    nav {
+        width: 100%;
+    }
+    .container {
+        width: 100%;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}

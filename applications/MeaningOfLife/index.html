@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Meaning Of Life</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!--<script src="js/three.min.js"></script>-->
+    <script src="js/three.js"></script>
+    <!--<script src="js/three.modules.js"></script>-->
+
+    <script type="x-shader/x-vertex" id="vertexshader">
+			attribute float size;
+			attribute vec3 customColor;
+			varying vec3 vColor;
+			void main() {
+				vColor = customColor;
+				vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+				gl_PointSize = size * ( 300.0 / -mvPosition.z );
+				gl_Position = projectionMatrix * mvPosition;
+			}
+	</script>
+
+    <script type="x-shader/x-fragment" id="fragmentshader">
+			uniform vec3 color;
+			uniform sampler2D texture;
+			varying vec3 vColor;
+			void main() {
+				gl_FragColor = vec4( color * vColor, 1.0 );
+				gl_FragColor = gl_FragColor * texture2D( texture, gl_PointCoord );
+			}
+	</script>
+
+    <script>
+
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|BB|PlayBook|IEMobile|Windows Phone|Kindle|Silk|Opera Mini/i.test(navigator.userAgent)) {
+            self.location = "./mobile.html";
+        }
+
+        var images = [
+            {path: 'imgs/prelude-title@2x.png', width: 467, height: 434, x: 0,    y: 0,    z: 15000, rotationY: 0},
+
+            {path: 'imgs/01/main-image.png',  width: 775,  height: 757,  x:  300, y: 50,   z: 9000,   rotationY: -40},
+            {path: 'imgs/02/main-image.png',  width: 1040, height: 956,  x: -300, y: 50,   z: 6000,   rotationY:  40},
+            {path: 'imgs/03/main-image.png',  width: 1196, height: 1291, x:  300, y: 50,   z: 3000,   rotationY: -40},
+            {path: 'imgs/04/main-image.png',  width: 1147, height: 986,  x:  300, y: 50,   z: 0,      rotationY: -40},
+            {path: 'imgs/05/main-image.png',  width: 989,  height: 1334, x:  300, y: 50,   z: -3000,  rotationY: -40},
+            {path: 'imgs/06/main-image.png',  width: 1811, height: 1775, x: -300, y: 50,   z: -6000,  rotationY:  40},
+            {path: 'imgs/07/main-image.png',  width: 793,  height: 953,  x:  300, y: 50,   z: -9000,  rotationY: -40},
+            {path: 'imgs/08/main-image.png',  width: 762,  height: 922,  x:  300, y: 50,   z: -15000, rotationY:   0},
+
+            {path: 'imgs/01/title.png',       width: 555,  height: 34,   x:  200, y: -200, z: 9300,   rotationY: -30},
+            {path: 'imgs/02/title.png',       width: 374,  height: 35,   x: -200, y: -200, z: 6300,   rotationY:  30},
+            {path: 'imgs/03/title.png',       width: 458,  height: 101,  x:  200, y: -200, z: 3300,   rotationY: -30},
+            {path: 'imgs/04/title.png',       width: 405,  height: 167,  x:  200, y: -200, z: 300,    rotationY: -30},
+            {path: 'imgs/05/title.png',       width: 533,  height: 34,   x:  200, y: -200, z: -2700,  rotationY: -30},
+            {path: 'imgs/06/title.png',       width: 503,  height: 101,  x: -200, y: -200, z: -5700,  rotationY:  30},
+            {path: 'imgs/07/title.png',       width: 544,  height: 34,   x:  200, y: -200, z: -8700,  rotationY: -30},
+            {path: 'imgs/08/title.png',       width: 544,  height: 34,   x:    0, y:  200, z: -14700, rotationY:   0},
+
+            {path: 'imgs/01/icon.png',        width: 146,  height: 183,  x: -250, y:    0, z: 9150,   rotationY: 0},
+            {path: 'imgs/02/icon.png',        width: 255,  height: 255,  x:  250, y:    0, z: 6150,   rotationY: 0},
+            {path: 'imgs/03/icon.png',        width: 266,  height: 265,  x: -250, y:    0, z: 3150,   rotationY: 0},
+            {path: 'imgs/04/icon.png',        width: 230,  height: 231,  x: -250, y:    0, z: 150,    rotationY: 0},
+            {path: 'imgs/05/icon.png',        width: 285,  height: 290,  x: -250, y:    0, z: -2850,  rotationY: 0},
+            {path: 'imgs/06/icon.png',        width: 234,  height: 195,  x:  250, y:    0, z: -5850,  rotationY: 0},
+            {path: 'imgs/07/icon.png',        width: 305,  height: 305,  x: -250, y:    0, z: -8850,  rotationY: 0},
+            {path: 'imgs/08/icon.png',        width: 198,  height: 197,  x: -250, y:    0, z: -14850, rotationY: 0},
+
+            {path: 'imgs/01/description.png', width: 543,  height: 110,  x: -200, y: -200, z: 9300,   rotationY:  20},
+            {path: 'imgs/02/description.png', width: 411,  height: 110,  x:  200, y: -200, z: 6300,   rotationY: -20},
+            {path: 'imgs/03/description.png', width: 390,  height: 154,  x: -200, y: -200, z: 3300,   rotationY:  20},
+            {path: 'imgs/04/description.png', width: 369,  height: 110,  x: -200, y: -200, z: 300,    rotationY:  20},
+            {path: 'imgs/05/description.png', width: 445,  height: 111,  x: -200, y: -200, z: -2700,  rotationY:  20},
+            {path: 'imgs/06/description.png', width: 601,  height: 149,  x:  200, y: -200, z: -5700,  rotationY: -20},
+            {path: 'imgs/07/description.png', width: 571,  height: 110,  x: -200, y: -200, z: -8700,  rotationY:  20},
+            {path: 'imgs/08/description.png', width: 525,  height: 149,  x:    0, y: -200, z: -14700, rotationY: 0}
+        ];
+
+        var pagePosition = [
+            15500, 9750, 6750, 3750, 750, -2250, -5250, -8250, -14250
+        ];
+
+        var ORIGIN_POSITION = 15500;
+
+        var scene, camera, renderer;
+//        var geometry, material, mesh;
+        var textureLoader = new THREE.TextureLoader();
+        var touchPosition = -1;
+        var scrollPosition = 0;
+        var particles = 100000;
+        var particleSystem, uniforms, geometry;
+
+        var currentPage = 0;
+        var pageLock = false;
+        var pageChanged = false;
+
+        init();
+        pageAnimate();
+
+        function init() {
+
+            scene = new THREE.Scene();
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+            camera.position.z = ORIGIN_POSITION;
+
+
+
+            // Draw sparks
+            uniforms = {
+                color:     { value: new THREE.Color( 0xffffff ) },
+                texture:   { value: new THREE.TextureLoader().load( "imgs/spark.png" ) }
+            };
+            var shaderMaterial = new THREE.ShaderMaterial( {
+                uniforms:       uniforms,
+                vertexShader:   document.getElementById( 'vertexshader' ).textContent,
+                fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+                blending:       THREE.AdditiveBlending,
+                depthTest:      false,
+                transparent:    true
+            });
+
+            var radius = 600;
+            var length = 16000;
+
+            geometry = new THREE.BufferGeometry();
+
+            var positions = new Float32Array( particles * 3 );
+            var colors = new Float32Array( particles * 3 );
+            var sizes = new Float32Array( particles );
+            var color = new THREE.Color(0xffffff);
+
+            for (var i = 0, i3 = 0; i < particles; i ++, i3 += 3 ) {
+                positions[ i3 ] = ( Math.random() * 2 - 1 ) * radius;
+                positions[ i3 + 1 ] = ( Math.random() * 2 - 1 ) * radius;
+                positions[ i3 + 2 ] = ( Math.random() * 2 - 1 ) * length;
+//                color.setHSL( i / particles, 1.0, 0.5 );
+                colors[ i3 ] = color.r;
+                colors[ i3 + 1 ] = color.g;
+                colors[ i3 + 2 ] = color.b;
+                sizes[ i ] = 25;
+            }
+            geometry.addAttribute( 'position', new THREE.BufferAttribute( positions, 3 ) );
+            geometry.addAttribute( 'customColor', new THREE.BufferAttribute( colors, 3 ) );
+            geometry.addAttribute( 'size', new THREE.BufferAttribute( sizes, 1 ) );
+            particleSystem = new THREE.Points( geometry, shaderMaterial );
+            scene.add( particleSystem );
+
+
+            // Add images
+            for (i in images) scene.add(loadImage(images[i]));
+
+            // Render
+            renderer = new THREE.WebGLRenderer();
+            renderer.setPixelRatio(2);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            document.body.appendChild(renderer.domElement);
+
+            // Events
+            document.addEventListener('mousewheel', function (event) {
+                event.preventDefault();
+//                scrollPosition += event.deltaY;
+                if (!pageLock) {
+                    if (event.deltaY < -40) {
+                        currentPage++;
+                        if (currentPage > 8) currentPage = 8;
+                    } else if (event.deltaY > 40) {
+                        currentPage--;
+                        if (currentPage < 0) currentPage = 0;
+                    }
+                    pageChanged = true;
+                    pageLock = true;
+                }
+            });
+            document.addEventListener('touchstart', function (event) {
+                if (!pageLock) {
+                    touchPosition = event.touches[0].screenY;
+                }
+            });
+            document.addEventListener('touchmove', function (event) {
+                event.preventDefault();
+                if (!pageLock) {
+//                    if (touchPosition > 0) {
+//                        scrollPosition -= event.touches[0].screenY - touchPosition;
+//                    }
+
+                    var delta = touchPosition - event.touches[0].screenY;
+                    touchPosition = event.touches[0].screenY;
+
+                    if (delta < -20) {
+                        currentPage++;
+                        if (currentPage > 8) currentPage = 8;
+                    } else if (delta > 20) {
+                        currentPage--;
+                        if (currentPage < 0) currentPage = 0;
+                    }
+                    pageChanged = true;
+                    pageLock = true;
+                }
+            });
+
+            window.addEventListener('deviceorientation', function (event) {
+//                console.log(event.alpha, event.beta, event.gamma);
+                camera.rotation.x = event.beta / 180 * Math.PI;
+                camera.rotation.y = event.gamma / 180 * Math.PI;
+                camera.rotation.z = event.alpha / 180 * Math.PI;
+            });
+
+            window.addEventListener('resize', function () {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize( window.innerWidth, window.innerHeight );
+            });
+
+        }
+
+        function preludeAnimate() {
+
+            requestAnimationFrame(preludeAnimate);
+
+            if (camera.position.z >= -13500) {
+                camera.position.z -= 10;
+            } else if (camera.position.z >= -14000) {
+                var value = 10 * (camera.position.z + 14000) / 500;
+                if (value < 0.5) value = 0.5;
+                camera.position.z -= value;
+            }
+
+            globalAnimate();
+
+        }
+
+        function mainAnimate() {
+            requestAnimationFrame(mainAnimate);
+
+            camera.position.z = ORIGIN_POSITION + scrollPosition;
+
+            globalAnimate();
+        }
+
+        var lastPosition;
+        function pageAnimate() {
+
+            requestAnimationFrame(pageAnimate);
+
+            if (pageChanged) {
+                lastPosition = camera.position.z;
+                pageChanged = false;
+            }
+
+            if (pageLock && !pageChanged) {
+                var z = pagePosition[currentPage];
+                var value;
+                var threshold = 800;
+                var speed = 80;
+                var minSpeed = 0.5;
+                if (lastPosition > z) {
+                    if (camera.position.z > z + threshold) {
+                        camera.position.z -= speed;
+                    } else if (camera.position.z > z) {
+                        value = speed * (camera.position.z - z) / threshold;
+                        if (value < minSpeed) value = minSpeed;
+                        camera.position.z -= value;
+                    } else {
+                        pageLock = false;
+                    }
+                } else {
+                    if (camera.position.z < z - threshold) {
+                        camera.position.z += speed;
+                    } else if (camera.position.z < z) {
+                        value = speed * (z - camera.position.z) / threshold;
+                        if (value < minSpeed) value = minSpeed;
+                        camera.position.z += value;
+                    } else {
+                        pageLock = false;
+                    }
+                }
+            }
+
+            globalAnimate();
+
+        }
+
+        function globalAnimate() {
+
+            scene.children.forEach(function (element) {
+                element.material.opacity = 1 - (camera.position.z - element.position.z - 1000) / 3000;
+            });
+
+
+
+            var time = Date.now() * 0.005;
+//            particleSystem.rotation.z = 0.01 * time;
+            var sizes = geometry.attributes.size.array;
+            for ( var i = 0; i < particles; i++ ) {
+                sizes[ i ] = 12.5 * ( 1 + Math.sin( 0.1 * i + time ) );
+            }
+            geometry.attributes.size.needsUpdate = true;
+
+
+            renderer.render(scene, camera);
+        }
+
+        function loadImage(parameters) {
+            var map = textureLoader.load(parameters.path);
+            var geometry = new THREE.PlaneBufferGeometry(parameters.width / 2, parameters.height / 2);
+            var material = new THREE.MeshBasicMaterial({map: map});
+            material.transparent = true;
+            var mesh = new THREE.Mesh(geometry, material);
+            mesh.position.x = parameters.x;
+            mesh.position.y = parameters.y;
+            mesh.position.z = parameters.z;
+            mesh.rotation.y = parameters.rotationY / 180 * Math.PI;
+            return mesh;
+        }
+    </script>
+</body>
+</html>

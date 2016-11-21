@@ -1,0 +1,27 @@
+.main-image img {
+    width: 100%;
+}
+
+.slick-next, .slick-prev {
+    text-indent: 100px;
+    width: 30px;
+    overflow: hidden;
+}
+
+.slick-next, .slick-next:hover, .slick-next:focus, .slick-next:visited {
+    right: -10%;
+    background: url("../imgs/main/arrow-next.svg") no-repeat;
+    background-size: 20px;
+}
+
+.slick-prev, .slick-prev:hover, .slick-prev:focus, .slick-prev:visited{
+    left: -10%;
+    background: url("../imgs/main/arrow-prev.svg") no-repeat;
+    background-size: 20px;
+}
+
+@media (max-width: 1525px) {
+    .slick-next, .slick-prev {
+        display: none !important;
+    }
+}

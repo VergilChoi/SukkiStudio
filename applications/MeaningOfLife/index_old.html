@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html class="fsvs" lang="en">
+    <head>
+        <title>Meaning Of Life</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0">
+        <link href="./css/pace.css" rel="stylesheet" type="text/css">
+        <script>
+            paceOptions = {
+                // Disable the 'elements' source
+//                elements: false,
+
+                // Only show the progress on regular and ajax-y page navigation,
+                // not every request
+                restartOnRequestAfter: false
+            }
+        </script>
+        <script src="./js/pace.min.js"></script>
+        <script src="./js/jquery-3.1.1.min.js"></script>
+
+        <style>
+            /* Keyframes */
+            @keyframes blur-fade-in {
+                from {
+                    opacity: 0;
+                    filter: blur(20px);
+                }
+                to {
+                    opacity: 1;
+                    filter: blur(0);
+                }
+            }
+
+            @keyframes blur-fade-out {
+                from {
+                    opacity: 1;
+                    filter: blur(0);
+                }
+                to {
+                    opacity: 0;
+                    filter: blur(20px);
+                }
+            }
+
+            @keyframes slide-up {
+                from {
+                    transform: translateY(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+
+            @keyframes slide-fade {
+                from {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateY(-100%);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes zoom-fade {
+                from {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+                to {
+                    transform: scale(1.5);
+                    opacity: 0;
+                }
+            }
+
+            @keyframes arrow-fade-in {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 1;
+                }
+            }
+
+            @keyframes arrow-animation {
+                0% {
+                    transform: translateY(-50%);
+                }
+                50% {
+                    transform: translateY(0);
+                }
+                100% {
+                    transform: translateY(-50%);
+                }
+            }
+
+            /* Global */
+
+            html {
+                height: 100%;
+            }
+            body {
+                background: #000000;
+                height: 100%;
+                padding: 0;
+                margin: 0;
+            }
+
+            
+            .main-container {
+                max-width: 1080px;
+                min-width: 320px;
+                margin: 0 auto;
+                height: 100%;
+                overflow: hidden;
+            }
+
+            .undisplay-page {
+                display: none;
+            }
+
+            .page-container {
+                width: 100%;
+                height: 100%;
+            }
+            
+
+
+            .down-arrow {
+                text-align: center;
+                position: fixed;
+                bottom: 3%;
+                width: 100%;
+                animation: arrow-animation 1.5s 0.5s linear infinite both;
+            }
+            .down-arrow img {
+                width: 5%;
+                animation: arrow-fade-in 0.5s 2s both;
+            }
+
+
+            /* Language Page */
+
+            #language-page {
+                background: url("./imgs/language-background@2x.png") no-repeat center content-box;
+                background-size: 120% auto;
+                animation: blur-fade-in 1.5s both;
+            }
+
+            .language-title, .language-button {
+                text-align: center;
+                width: 100%;
+            }
+            .language-content img {
+                width: 50%;
+            }
+            .language-title {
+                margin-bottom: 35%;
+                animation: slide-up 1s 1.5s both;
+            }
+            .language-button {
+                margin-top: 5%;
+            }
+            .language-content {
+                position: relative;
+                top: 40%;
+            }
+            .language-en {
+                animation: slide-up 1s 1.7s both;
+            }
+            .language-cn {
+                animation: slide-up 1s 1.9s both;
+            }
+
+
+            /* Prelude Page */
+            #prelude-page {
+                text-align: center;
+            }
+
+            .prelude-title {
+                margin-top: 35%;
+                height: 5%;
+                animation: slide-up 1s both;
+            }
+            .prelude-title img {
+                width: 60%;
+            }
+
+            .prelude-subtitle {
+                margin-top: 85%;
+                height: 3%;
+                animation: slide-up 1s 0.2s both;
+            }
+            .prelude-subtitle img {
+                width: 45%;
+            }
+
+
+
+            /* Preface Page */
+            #preface-page {
+                text-align: center;
+            }
+            .preface-background {
+                /*position: relative;*/
+                /*top: -20%;*/
+                animation: slide-up 1.5s both;
+                height: 100%;
+                background: url("./imgs/preface-background@2x.png") center no-repeat content-box;
+                background-size: 200% auto;
+            }
+            /*.preface-background img {*/
+                /*width: 200%;*/
+            /*}*/
+            .preface-title {
+                position: relative;
+                top: 45%;
+                height: 60%;
+                animation: slide-up 1.5s both;
+            }
+            .preface-title img {
+                width: 65%;
+            }
+
+
+
+            /* Page Glabol */
+            .page-title {
+                padding-top: 15%;
+                text-align: center;
+            }
+            .page-title img {
+                width: 75%;
+                animation: slide-up 1s both;
+            }
+            .page-main-image {
+                position: fixed;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                animation: blur-fade-in 1s both;
+            }
+            .page-main-image img {
+                margin: auto;
+                position: absolute;
+                top: 0; left: 0; bottom: 0; right: 0;
+            }
+            .page-description-block {
+                width: 88%;
+                position: fixed;
+                bottom: 0;
+                padding-bottom: 10%;
+                margin-left: 6%;
+                margin-right: 6%;
+            }
+            .page-icon {
+                width: 100%;
+                padding-bottom: 5%;
+            }
+            .page-icon img {
+                width: 35%;
+                animation: slide-up 1s 0.4s both;
+            }
+            .page-description {
+                width: 100%;
+            }
+            .page-description img {
+                width: 70%;
+                animation: slide-up 1s 0.8s both;
+            }
+            .right-side {
+                text-align: right;
+            }
+            .left-side {
+                text-align: left;
+            }
+
+
+
+            /* 01 */
+            #page-01 .page-icon img {
+                width: 35%;
+            }
+            #page-01 .page-description img {
+                width: 90%;
+            }
+            #page-01 .page-main-image img {
+                width: 100%;
+                left: -50%;
+            }
+
+            /* 02 */
+            #page-02 .page-icon img {
+                position: relative;
+                left: -5%;
+                width: 30%;
+            }
+            #page-02 .page-main-image img {
+                width: 135%;
+                right: -100%;
+            }
+
+            /* 03 */
+            #page-03 .page-main-image img {
+                width: 160%;
+                left: -30%;
+            }
+
+            /* 04 */
+            #page-04 .page-main-image img {
+                width: 150%;
+                top: 15%;
+                left: -50%;
+            }
+            #page-04 .page-main-image.copy img {
+                width: 80%;
+                position: relative;
+                top: -10%;
+                left: 70%;
+            }
+
+            /* 05 */
+            #page-05 .page-main-image img {
+                width: 160%;
+                left: -40%;
+            }
+
+            /* 06 */
+            #page-06 .page-icon img {
+                width: 30%;
+            }
+            #page-06 .page-description img {
+                width: 100%;
+            }
+            #page-06 .page-main-image img {
+                width: 260%;
+                left: -80%;
+            }
+
+            /* 07 */
+            #page-07 .page-icon img {
+                position: relative;
+                width: 30%;
+                right: -5%;
+            }
+            #page-07 .page-description img {
+                width: 100%;
+            }
+            #page-07 .page-main-image img {
+                width: 125%;
+                left: -20%;
+            }
+
+            /* 08 */
+            #page-08 .page-icon {
+                text-align: center;
+            }
+            #page-08 .page-icon img {
+                width: 30%;
+            }
+            #page-08 .page-description {
+                text-align: center;
+            }
+            #page-08 .page-description img {
+                width: 90%;
+            }
+            #page-08 .page-main-image img {
+                width: 100%;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="main-container" id="fsvs-body">
+            <div class="page-container undisplay-page" id="language-page">
+                <div class="language-content">
+                    <div class="language-title">
+                        <img src="./imgs/language-title@2x.png" width="431">
+                    </div>
+                    <div class="language-button language-en" id="test">
+                        <img src="./imgs/language-en@2x.png" alt="English">
+                    </div>
+                    <div class="language-button language-cn">
+                        <img src="./imgs/language-cn@2x.png" alt="中文">
+                    </div>
+                </div>
+            </div>
+            <div class="page-container undisplay-page" id="prelude-page">
+                <div class="prelude-title">
+                    <img src="./imgs/prelude-title@2x.png" alt="" width="467">
+                </div>
+                <div class="prelude-subtitle">
+                    <img src="./imgs/prelude-subtitle@2x.png" alt="" width="326">
+                </div>
+                <div class="down-arrow">
+                    <img src="./imgs/down-arrow@2x.png" alt="" width="37">
+                </div>
+            </div>
+            <div class="page-container undisplay-page" id="preface-page">
+                <div class="preface-background">
+                    <!--<img src="./imgs/preface-background@2x.png" alt="" width="1369">-->
+                    <div class="preface-title">
+                        <img src="./imgs/preface-title-en@2x.png" alt="" width="415">
+                    </div>
+                </div>
+                <div class="down-arrow">
+                    <img src="./imgs/down-arrow@2x.png" alt="" width="37">
+                </div>
+            </div>
+
+
+
+            <div class="page-container undisplay-page" id="page-01">
+                <div class="page-title">
+                    <img src="./imgs/01/title.png" alt="" width="564">
+                </div>
+                <div class="page-main-image">
+                    <img src="./imgs/01/main-image.png" alt="" width="775">
+                </div>
+                <div class="page-description-block">
+                    <div class="page-icon right-side">
+                        <img src="./imgs/01/icon.png" alt="" width="146">
+                    </div>
+                    <div class="page-description right-side">
+                        <img src="./imgs/01/description.png" alt="" width="552">
+                    </div>
+                </div>
+                <div class="down-arrow">
+                    <img src="./imgs/down-arrow@2x.png" alt="" width="37">
+                </div>
+            </div>
+
+            <div class="page-container undisplay-page" id="page-02">
+                <div class="page-title">
+                    <img src="./imgs/02/title.png" alt="" width="383">
+                </div>
+                <div class="page-main-image">
+                    <img src="./imgs/02/main-image.png" alt="" width="775">
+                </div>
+                <div class="page-description-block">
+                    <div class="page-icon left-side">
+                        <img src="./imgs/02/icon.png" alt="" width="255">
+                    </div>
+                    <div class="page-description left-side">
+                        <img src="./imgs/02/description.png" alt="" width="420">
+                    </div>
+                </div>
+                <div class="down-arrow">
+                    <img src="./imgs/down-arrow@2x.png" alt="" width="37">
+                </div>
+            </div>
+
+            <div class="page-container undisplay-page" id="page-03">
+                <div class="page-title">
+                    <img src="./imgs/03/title.png" alt="" width="467">
+                </div>
+                <div class="page-main-image">
+                    <img src="./imgs/03/main-image.png" alt="" width="1196">
+                </div>
+                <div class="page-description-block">
+                    <div class="page-icon right-side">
+                        <img src="./imgs/03/icon.png" alt="" width="266">
+                    </div>
+                    <div class="page-description right-side">
+                        <img src="./imgs/03/description.png" alt="" width="399">
+                    </div>
+                </div>
+                <div class="down-arrow">
+                    <img src="./imgs/down-arrow@2x.png" alt="" width="37">
+                </div>
+            </div>
+
+            <div class="page-container undisplay-page" id="page-04">
+                <div class="page-title">
+                    <img src="./imgs/04/title.png" alt="" width="414">
+                </div>
+                <div class="page-main-image">
+                    <img src="./imgs/04/main-image.png" alt="" width="775">
+                </div>
+                <div class="page-main-image copy">
+                    <img src="./imgs/04/main-image.png" alt="" width="775">
+                </div>
+                <div class="page-description-block">
+                    <div class="page-icon right-side">
+                        <img src="./imgs/04/icon.png" alt="" width="230">
+                    </div>
+                    <div class="page-description right-side">
+                        <img src="./imgs/04/description.png" alt="" width="378">
+                    </div>
+                </div>
+                <div class="down-arrow">
+                    <img src="./imgs/down-arrow@2x.png" alt="" width="37">
+                </div>
+            </div>
+
+            <div class="page-container undisplay-page" id="page-05">
+                <div class="page-title">
+                    <img src="./imgs/05/title.png" alt="" width="542">
+                </div>
+                <div class="page-main-image">
+                    <img src="./imgs/05/main-image.png" alt="" width="775">
+                </div>
+                <div class="page-description-block">
+                    <div class="page-icon right-side">
+                        <img src="./imgs/05/icon.png" alt="" width="285">
+                    </div>
+                    <div class="page-description right-side">
+                        <img src="./imgs/05/description.png" alt="" width="454">
+                    </div>
+                </div>
+                <div class="down-arrow">
+                    <img src="./imgs/down-arrow@2x.png" alt="" width="37">
+                </div>
+            </div>
+
+            <div class="page-container undisplay-page" id="page-06">
+                <div class="page-title">
+                    <img src="./imgs/06/title.png" alt="" width="512">
+                </div>
+                <div class="page-main-image">
+                    <img src="./imgs/06/main-image.png" alt="" width="775">
+                </div>
+                <div class="page-description-block">
+                    <div class="page-icon left-side">
+                        <img src="./imgs/06/icon.png" alt="" width="234">
+                    </div>
+                    <div class="page-description left-side">
+                        <img src="./imgs/06/description.png" alt="" width="610">
+                    </div>
+                </div>
+                <div class="down-arrow">
+                    <img src="./imgs/down-arrow@2x.png" alt="" width="37">
+                </div>
+            </div>
+
+            <div class="page-container undisplay-page" id="page-07">
+                <div class="page-title">
+                    <img src="./imgs/07/title.png" alt="" width="552">
+                </div>
+                <div class="page-main-image">
+                    <img src="./imgs/07/main-image.png" alt="" width="793">
+                </div>
+                <div class="page-description-block">
+                    <div class="page-icon right-side">
+                        <img src="./imgs/07/icon.png" alt="" width="305">
+                    </div>
+                    <div class="page-description right-side">
+                        <img src="./imgs/07/description.png" alt="" width="571">
+                    </div>
+                </div>
+                <div class="down-arrow">
+                    <img src="./imgs/down-arrow@2x.png" alt="" width="37">
+                </div>
+            </div>
+
+            <div class="page-container undisplay-page" id="page-08">
+                <div class="page-title">
+                    <img src="./imgs/08/title.png" alt="" width="553">
+                </div>
+                <div class="page-main-image">
+                    <img src="./imgs/08/main-image.png" alt="" width="762">
+                </div>
+                <div class="page-description-block">
+                    <div class="page-icon right-side">
+                        <img src="./imgs/08/icon.png" alt="" width="198">
+                    </div>
+                    <div class="page-description right-side">
+                        <img src="./imgs/08/description.png" alt="" width="534">
+                    </div>
+                </div>
+                <div class="down-arrow">
+                    <img src="./imgs/down-arrow@2x.png" alt="" width="37">
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript">
+
+            window.onload = function () {
+                $('#language-page').removeClass('undisplay-page');
+            };
+
+            // Global
+
+            
+            const undisplayPage = 'undisplay-page';
+            const pageContainer = $('.page-container');
+            var currentPage = 0;
+            var endActions = [];
+
+            
+
+            function displayNextPage () {
+                if (currentPage + 1 > endActions.length) return;
+                endActions[currentPage]['animation']();
+                setTimeout(function () {
+                    $(pageContainer[currentPage]).addClass(undisplayPage);
+                    $(pageContainer[currentPage + 1]).removeClass(undisplayPage);
+                    currentPage++;
+                }, endActions[currentPage]['delay'] * 1000);
+            }
+
+            $('.down-arrow').on('click', displayNextPage);
+
+
+            // Language Page
+            var fadeAnimationOption = {
+                'animation': 'slide-fade 1s 0.5s both'
+            };
+            endActions.push({
+                delay: 2,
+                animation: function () {}
+            });
+            var buttons = $('.language-button');
+            buttons.on('click', function () {
+                $(this).find('img').css('animation', 'zoom-fade 1s both');
+                $('.language-title').css(fadeAnimationOption);
+                for (var i = 0; i < buttons.length; i++) {
+                    if (buttons[i] != this) {
+                        $(buttons[i]).css(fadeAnimationOption);
+                    }
+                }
+                $('#language-page').css('animation', 'blur-fade-out 1.5s 1s both');
+                displayNextPage();
+            });
+
+            // Prelude Page
+            endActions.push({
+                delay: 1,
+                animation: function () {
+                    $('#prelude-page').css('animation', 'blur-fade-out 1.5s both')
+                }
+            });
+
+            // Preface Page
+            endActions.push({
+                delay: 1,
+                animation: function () {
+                    $('#preface-page').css('animation', 'blur-fade-out 1.5s both')
+                }
+            });
+
+            // Page 1
+            endActions.push({
+                delay: 1.5,
+                animation: function () {
+                    $('#page-01').css('animation', 'blur-fade-out 1.5s both')
+                }
+            });
+
+            // Page 2
+            endActions.push({
+                delay: 1.5,
+                animation: function () {
+                    $('#page-02').css('animation', 'blur-fade-out 1.5s both')
+                }
+            });
+
+            // Page 3
+            endActions.push({
+                delay: 1.5,
+                animation: function () {
+                    $('#page-03').css('animation', 'blur-fade-out 1.5s both')
+                }
+            });
+
+
+            // Page 4
+            endActions.push({
+                delay: 1.5,
+                animation: function () {
+                    $('#page-04').css('animation', 'blur-fade-out 1.5s both')
+                }
+            });
+
+
+            // Page 5
+            endActions.push({
+                delay: 1.5,
+                animation: function () {
+                    $('#page-05').css('animation', 'blur-fade-out 1.5s both')
+                }
+            });
+
+
+            // Page 6
+            endActions.push({
+                delay: 1.5,
+                animation: function () {
+                    $('#page-06').css('animation', 'blur-fade-out 1.5s both')
+                }
+            });
+
+            // Page 7
+            endActions.push({
+                delay: 1.5,
+                animation: function () {
+                    $('#page-07').css('animation', 'blur-fade-out 1.5s both')
+                }
+            });
+
+            // Page 8
+            endActions.push({
+                delay: 1.5,
+                animation: function () {
+                    $('#page-08').css('animation', 'blur-fade-out 1.5s both')
+                }
+            });
+
+
+
+
+        </script>
+    </body>
+</html>
