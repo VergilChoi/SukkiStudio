@@ -17,7 +17,7 @@
 }
 
 body {
-    font-family: "Futura LT Book", "SF UI Text", Arial, serif;
+    font-family: "Futura LT Book", "SF UI Text", "PingFangSC-Regular", "微软雅黑", Arial, serif;
     padding: 0;
     margin: 0;
     background: #FFFFFF;
@@ -30,7 +30,7 @@ html, body {
     height: 100%;
 }
 
-.container {
+.base-container {
     flex-grow: 9999;
     margin-top: 60px;
     margin-bottom: 80px;
